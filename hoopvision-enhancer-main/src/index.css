@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    --primary: 216 93% 57%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 13%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 13%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 80%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 216 93% 57%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 25 100% 50%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 74% 42%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 0 0% 30%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+
+  /* Improved tap target size for mobile */
+  button, a, input, select, textarea {
+    @apply touch-manipulation;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-card;
+  }
+
+  .card-hover-effect {
+    @apply transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)];
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background;
+  }
+
+  .responsive-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Mobile optimizations */
+  .mobile-nav {
+    @apply fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around bg-background border-t border-border py-2;
+  }
+
+  .mobile-nav-item {
+    @apply flex flex-col items-center justify-center p-2 text-xs;
+  }
+
+  /* Responsive layout adjustments */
+  .responsive-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+  }
+
+  .responsive-flex {
+    @apply flex flex-col sm:flex-row;
+  }
+  
+  /* Utility para esconder elementos somente em mobile */
+  .hide-on-mobile {
+    @apply hidden sm:block;
+  }
+  
+  /* Utilidade para exibir elementos somente em mobile */
+  .show-on-mobile-only {
+    @apply block sm:hidden;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.team-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-muted rounded-full;
+}
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+#root {
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  
+  .mobile-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .mobile-full-width {
+    width: 100%;
+  }
+  
+  .mobile-text-center {
+    text-align: center;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-overflow-scrolling: touch) {
+  .ios-padding-fix {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .ios-fixed-bottom {
+    bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Dark mode preference */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
