@@ -1,13 +1,14 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './components/theme-provider';
 import Layout from './components/Layout';
-import { Toaster } from './components/ui/toaster';
-import Index from './pages/Index';
+import Teams from './pages/Teams';
 import Players from './pages/Players';
 import Matches from './pages/Matches';
-import Teams from './pages/Teams';
 import PlayerDetail from './pages/PlayerDetail';
 import NotFound from './pages/NotFound';
+import { Toaster } from './components/ui/toaster';
+import HomePage from './app/page';
 
 function App() {
   return (
@@ -15,16 +16,16 @@ function App() {
       <Router>
         <Layout>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/players" element={<Players />} />
-            <Route path="/players/:id" element={<PlayerDetail />} />
-            <Route path="/matches" element={<Matches />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/teams" element={<Teams />} />
+            <Route path="/players" element={<Players />} />
+            <Route path="/matches" element={<Matches />} />
+            <Route path="/players/:id" element={<PlayerDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <Toaster />
         </Layout>
       </Router>
+      <Toaster />
     </ThemeProvider>
   );
 }

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 // Tipos de tema permitidos
-type Theme = "dark" | "light" | "system";
+type Theme = "light" | "dark" | "system";
 
 // Interface para as props do ThemeProvider
 interface ThemeProviderProps {
@@ -11,31 +11,19 @@ interface ThemeProviderProps {
 }
 
 // Interface para o contexto do tema
-interface ThemeContextProps {
+interface ThemeContextValue {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  resolvedTheme: Theme;
-  systemTheme: Theme;
-  themes: Theme[];
 }
 
-// Estado inicial do contexto
-const initialState: ThemeContextProps = {
-  theme: "system",
-  setTheme: () => null,
-  resolvedTheme: "system",
-  systemTheme: "system",
-  themes: ["light", "dark", "system"],
-};
-
 // Criação do contexto
-const ThemeContext = createContext<ThemeContextProps>(initialState);
+const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 // Hook para usar o tema
-export function useTheme() {
+export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme deve ser usado dentro de um ThemeProvider");
+  if (context === undefined) {
+    throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
 }
@@ -44,7 +32,8 @@ export function useTheme() {
 export function ThemeProvider({
   children,
   defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  storageKey = "theme",
+  ...props
 }: ThemeProviderProps) {
   // Estado para o tema atual
   const [theme, setTheme] = useState<Theme>(() => {
@@ -53,28 +42,6 @@ export function ThemeProvider({
     return (storedTheme as Theme) || defaultTheme;
   });
 
-  // Estado para o tema do sistema
-  const [systemTheme, setSystemTheme] = useState<Theme>("light");
-
-  // Obtém o tema resolvido (tema atual ou tema do sistema se o tema for "system")
-  const resolvedTheme = theme === "system" ? systemTheme : theme;
-
-  // Detecta o tema do sistema e atualiza quando muda
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    
-    const handleChange = () => {
-      setSystemTheme(mediaQuery.matches ? "dark" : "light");
-    };
-    
-    handleChange();
-    mediaQuery.addEventListener("change", handleChange);
-    
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange);
-    };
-  }, []);
-
   // Aplica a classe do tema ao elemento html
   useEffect(() => {
     const root = window.document.documentElement;
@@ -82,9 +49,16 @@ export function ThemeProvider({
     // Remove as classes de tema antigas
     root.classList.remove("light", "dark");
     
-    // Adiciona a classe do tema resolvido
-    root.classList.add(resolvedTheme);
-  }, [resolvedTheme]);
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light";
+      
+      root.classList.add(systemTheme);
+    } else {
+      root.classList.add(theme);
+    }
+  }, [theme]);
 
   // Função para alterar o tema
   const handleSetTheme = (newTheme: Theme) => {
@@ -96,13 +70,10 @@ export function ThemeProvider({
   const value = {
     theme,
     setTheme: handleSetTheme,
-    resolvedTheme,
-    systemTheme,
-    themes: ["light", "dark", "system"],
   };
 
   return (
-    <ThemeContext.Provider value={value}>
+    <ThemeContext.Provider value={value} {...props}>
       {children}
     </ThemeContext.Provider>
   );

@@ -1,16 +1,13 @@
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "@/components/theme-provider"
+import React from 'react';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from './theme-provider';
 
 export function ModeToggle() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light")
-    } else {
-      setTheme("dark")
-    }
-  }
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
 
   return (
     <button
@@ -18,11 +15,7 @@ export function ModeToggle() {
       className="rounded-md p-2 hover:bg-accent"
       aria-label="Toggle theme"
     >
-      {theme === "dark" ? (
-        <Moon className="h-5 w-5" />
-      ) : (
-        <Sun className="h-5 w-5" />
-      )}
+      {theme === 'light' ? <Moon className="h-[1.2rem] w-[1.2rem]" /> : <Sun className="h-[1.2rem] w-[1.2rem]" />}
     </button>
-  )
+  );
 } 

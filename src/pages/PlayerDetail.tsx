@@ -1,69 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Calendar, TrendingUp, BarChart2, User, Users, ArrowLeft, Trophy, Target, Basketball } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
-import Header from '@/components/Header';
-import PlayerPredictionCard from '@/components/PlayerPredictionCard';
-import PlayerMatchupAnalysis from '@/components/PlayerMatchupAnalysis';
-import { mockPlayers } from '@/utils/mockData';
+import { Basketball } from 'lucide-react';
 
 const PlayerDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const [player, setPlayer] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   
-  useEffect(() => {
-    if (id) {
-      const fetchPlayerData = async () => {
-        try {
-          setLoading(true);
-          const playerData = mockPlayers.find(p => p.id === parseInt(id));
-          setPlayer(playerData);
-        } catch (error) {
-          console.error('Erro ao carregar dados do jogador:', error);
-          toast({
-            title: 'Erro',
-            description: 'Não foi possível carregar os dados do jogador',
-            variant: 'destructive',
-          });
-        } finally {
-          setLoading(false);
-        }
-      };
-      
-      fetchPlayerData();
-    }
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-basketball-gray/30 to-white">
-        <Header />
-        <div className="container mx-auto px-4 py-12 flex justify-center">
-          <div className="loading-spinner"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!player) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-basketball-gray/30 to-white">
-        <Header />
-        <div className="container mx-auto px-4 py-12 flex justify-center">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4">Jogador não encontrado</h2>
-            <Link to="/players" className="text-basketball-accent hover:text-basketball-orange">
-              Voltar para lista de jogadores
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto py-8">
       <div className="mb-6">

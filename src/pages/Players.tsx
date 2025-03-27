@@ -1,37 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Filter, Calendar, SortAsc, SortDesc, RefreshCw, Users, Basketball } from 'lucide-react';
-import Header from '@/components/Header';
-import PlayerCard from '@/components/PlayerCard';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Skeleton } from '@/components/ui/skeleton';
-import { 
-  Select, 
-  SelectTrigger, 
-  SelectValue, 
-  SelectContent, 
-  SelectItem 
-} from '@/components/ui/select';
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogClose 
-} from '@/components/ui/dialog';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { toast } from '@/hooks/use-toast';
-
-// Importar funções do API Service
-import { 
-  fetchAllPlayers, 
-  fetchPlayerPrediction, 
-  Player, 
-  PlayerPrediction 
-} from '@/utils/nbaApiService';
+import { Basketball } from 'lucide-react';
 
 const Players = () => {
   return (
@@ -68,9 +37,9 @@ const Players = () => {
             </div>
             
             <div className="mt-4 pt-4 border-t">
-              <a href={`/players/${player}`} className="text-primary hover:underline">
+              <Link to={`/players/${player}`} className="text-primary hover:underline">
                 Ver detalhes
-              </a>
+              </Link>
             </div>
           </div>
         ))}
