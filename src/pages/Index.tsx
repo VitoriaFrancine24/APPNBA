@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Basketball } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Index = () => {
   return (
@@ -23,7 +24,9 @@ const Index = () => {
             <p className="text-muted-foreground">
               Acompanhe os jogos em andamento e as previsões para hoje
             </p>
-            <Button className="mt-4">Ver Jogos</Button>
+            <Button className="mt-4" asChild>
+              <Link to="/matches">Ver Jogos</Link>
+            </Button>
           </CardContent>
         </Card>
         <Card>
@@ -37,7 +40,9 @@ const Index = () => {
             <p className="text-muted-foreground">
               Análise detalhada de estatísticas e tendências
             </p>
-            <Button className="mt-4">Ver Estatísticas</Button>
+            <Button className="mt-4" asChild>
+              <Link to="/players">Ver Estatísticas</Link>
+            </Button>
           </CardContent>
         </Card>
         <Card>
@@ -51,7 +56,9 @@ const Index = () => {
             <p className="text-muted-foreground">
               Previsões baseadas em IA para próximos jogos
             </p>
-            <Button className="mt-4">Ver Previsões</Button>
+            <Button className="mt-4" asChild>
+              <Link to="/matches">Ver Previsões</Link>
+            </Button>
           </CardContent>
         </Card>
       </div>
