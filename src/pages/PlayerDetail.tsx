@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ChevronRight, Calendar, TrendingUp, BarChart2, User, Users, ArrowLeft, Trophy, Target } from 'lucide-react';
+import { ChevronRight, Calendar, TrendingUp, BarChart2, User, Users, ArrowLeft, Trophy, Target, Basketball } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
@@ -65,110 +65,98 @@ const PlayerDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-basketball-gray/30 to-white">
-      <Header />
+    <div className="container mx-auto py-8">
+      <div className="mb-6">
+        <Link to="/players" className="text-primary hover:underline">
+          ← Voltar para Jogadores
+        </Link>
+      </div>
       
-      <main className="container mx-auto px-4 py-6">
-        <div className="mb-8">
-          <Button variant="ghost" className="mb-4" asChild>
-            <Link to="/players">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Voltar
-            </Link>
-          </Button>
-          <h1 className="text-4xl font-bold mb-2">Detalhes do Jogador</h1>
-          <p className="text-xl text-muted-foreground">
-            Informações detalhadas e estatísticas do jogador
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Estatísticas Gerais */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Trophy className="h-5 w-5 text-yellow-500" />
-                Estatísticas Gerais
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Pontos por jogo:</span>
-                  <span className="font-bold">{player.stats.points}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Rebotes por jogo:</span>
-                  <span className="font-bold">{player.stats.rebounds}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Assistências por jogo:</span>
-                  <span className="font-bold">{player.stats.assists}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Eficiência */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-blue-500" />
-                Eficiência
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>FG%:</span>
-                  <span className="font-bold">{(player.stats.fg_pct * 100).toFixed(1)}%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>3P%:</span>
-                  <span className="font-bold">{(player.stats.three_pct * 100).toFixed(1)}%</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>FT%:</span>
-                  <span className="font-bold">{(player.stats.ft_pct * 100).toFixed(1)}%</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Defesa */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-green-500" />
-                Defesa
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Roubos por jogo:</span>
-                  <span className="font-bold">{player.stats.steals}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Bloqueios por jogo:</span>
-                  <span className="font-bold">{player.stats.blocks}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Informações do Jogador */}
-        <div className="mt-8">
-          <div className="flex items-center gap-4 mb-6">
-            <h2 className="text-2xl font-bold">{player.name}</h2>
-            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
-              {player.position}
-            </span>
-            <span className="text-muted-foreground">{player.team}</span>
+      <div className="border rounded-lg p-6 mb-6">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="bg-primary/10 p-3 rounded-full">
+            <Basketball className="h-8 w-8 text-primary" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold">Jogador {id}</h1>
+            <p className="text-muted-foreground">Ala-Armador | Time Lakers</p>
           </div>
         </div>
-      </main>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold mb-2">Estatísticas da Temporada</h2>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span>Pontos por jogo</span>
+                <span className="font-medium">25.4</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Rebotes por jogo</span>
+                <span className="font-medium">6.5</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Assistências por jogo</span>
+                <span className="font-medium">7.2</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Aproveitamento de arremessos</span>
+                <span className="font-medium">48.9%</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Aproveitamento de 3 pontos</span>
+                <span className="font-medium">38.7%</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold mb-2">Informações Pessoais</h2>
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span>Altura</span>
+                <span className="font-medium">2.03m</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Peso</span>
+                <span className="font-medium">98kg</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Idade</span>
+                <span className="font-medium">29 anos</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Número</span>
+                <span className="font-medium">#23</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Experiência</span>
+                <span className="font-medium">8 anos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="border rounded-lg p-6">
+        <h2 className="text-xl font-semibold mb-4">Desempenho Recente</h2>
+        <div className="space-y-4">
+          {[1, 2, 3].map((game) => (
+            <div key={game} className="border rounded-lg p-4 hover:bg-accent transition-colors">
+              <div className="flex justify-between items-center">
+                <div>
+                  <div className="font-medium">Lakers vs Warriors</div>
+                  <div className="text-sm text-muted-foreground">25/03/2025</div>
+                </div>
+                <div className="text-right">
+                  <div className="font-medium">28 pts, 7 reb, 9 ast</div>
+                  <div className="text-sm text-muted-foreground">35 minutos</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

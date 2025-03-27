@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 
 const NotFound = () => {
   return (
@@ -9,9 +8,9 @@ const NotFound = () => {
       <p className="text-muted-foreground mt-2 max-w-md">
         A página que você está procurando não existe ou foi movida.
       </p>
-      <Button className="mt-8" asChild>
-        <Link to="/">Voltar para o início</Link>
-      </Button>
+      <Link to="/" className="mt-8 inline-block px-4 py-2 rounded bg-primary text-primary-foreground">
+        Voltar para o início
+      </Link>
     </div>
   );
 };

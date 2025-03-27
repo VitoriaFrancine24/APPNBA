@@ -8,7 +8,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
+const Layout = ({ children }: LayoutProps) => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="hoopvision-theme">
       <div className="min-h-screen bg-background">
@@ -20,6 +20,6 @@ export function Layout({ children }: LayoutProps) {
       </div>
     </ThemeProvider>
   );
-}
+};
 
 export default Layout; 

@@ -1,73 +1,109 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
+// Tipos de tema permitidos
 type Theme = "dark" | "light" | "system";
 
-type ThemeProviderProps = {
-  children: ReactNode;
+// Interface para as props do ThemeProvider
+interface ThemeProviderProps {
+  children: React.ReactNode;
   defaultTheme?: Theme;
   storageKey?: string;
-};
+}
 
-type ThemeProviderState = {
+// Interface para o contexto do tema
+interface ThemeContextProps {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-};
+  resolvedTheme: Theme;
+  systemTheme: Theme;
+  themes: Theme[];
+}
 
-const initialState: ThemeProviderState = {
+// Estado inicial do contexto
+const initialState: ThemeContextProps = {
   theme: "system",
   setTheme: () => null,
+  resolvedTheme: "system",
+  systemTheme: "system",
+  themes: ["light", "dark", "system"],
 };
 
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+// Criação do contexto
+const ThemeContext = createContext<ThemeContextProps>(initialState);
 
+// Hook para usar o tema
+export function useTheme() {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme deve ser usado dentro de um ThemeProvider");
+  }
+  return context;
+}
+
+// Componente ThemeProvider
 export function ThemeProvider({
   children,
   defaultTheme = "system",
   storageKey = "vite-ui-theme",
-  ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  // Estado para o tema atual
+  const [theme, setTheme] = useState<Theme>(() => {
+    // Tenta recuperar o tema do localStorage
+    const storedTheme = localStorage.getItem(storageKey);
+    return (storedTheme as Theme) || defaultTheme;
+  });
 
+  // Estado para o tema do sistema
+  const [systemTheme, setSystemTheme] = useState<Theme>("light");
+
+  // Obtém o tema resolvido (tema atual ou tema do sistema se o tema for "system")
+  const resolvedTheme = theme === "system" ? systemTheme : theme;
+
+  // Detecta o tema do sistema e atualiza quando muda
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    
+    const handleChange = () => {
+      setSystemTheme(mediaQuery.matches ? "dark" : "light");
+    };
+    
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+    
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  // Aplica a classe do tema ao elemento html
   useEffect(() => {
     const root = window.document.documentElement;
     
+    // Remove as classes de tema antigas
     root.classList.remove("light", "dark");
     
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-      
-      root.classList.add(systemTheme);
-      return;
-    }
-    
-    root.classList.add(theme);
-  }, [theme]);
+    // Adiciona a classe do tema resolvido
+    root.classList.add(resolvedTheme);
+  }, [resolvedTheme]);
 
+  // Função para alterar o tema
+  const handleSetTheme = (newTheme: Theme) => {
+    localStorage.setItem(storageKey, newTheme);
+    setTheme(newTheme);
+  };
+
+  // Valor do contexto
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
-    },
+    setTheme: handleSetTheme,
+    resolvedTheme,
+    systemTheme,
+    themes: ["light", "dark", "system"],
   };
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value}>
+    <ThemeContext.Provider value={value}>
       {children}
-    </ThemeProviderContext.Provider>
+    </ThemeContext.Provider>
   );
-}
-
-export const useTheme = () => {
-  const context = useContext(ThemeProviderContext);
-
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider");
-
-  return context;
 } 

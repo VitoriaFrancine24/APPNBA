@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Layout } from './components/Layout';
+import { ThemeProvider } from './components/theme-provider';
+import Layout from './components/Layout';
 import { Toaster } from './components/ui/toaster';
 import Index from './pages/Index';
 import Players from './pages/Players';
@@ -10,19 +11,21 @@ import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/players" element={<Players />} />
-          <Route path="/players/:id" element={<PlayerDetail />} />
-          <Route path="/matches" element={<Matches />} />
-          <Route path="/teams" element={<Teams />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Toaster />
-      </Layout>
-    </Router>
+    <ThemeProvider defaultTheme="dark" storageKey="hoopvision-theme">
+      <Router>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/players" element={<Players />} />
+            <Route path="/players/:id" element={<PlayerDetail />} />
+            <Route path="/matches" element={<Matches />} />
+            <Route path="/teams" element={<Teams />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Toaster />
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 }
 

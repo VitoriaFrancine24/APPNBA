@@ -3,12 +3,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { 
-  NavigationMenu, 
-  NavigationMenuItem, 
-  NavigationMenuList,
-  navigationMenuTriggerStyle
-} from "@/components/ui/navigation-menu";
 import { Basketball } from 'lucide-react';
 
 const navItems = [
@@ -38,29 +32,25 @@ export function MainNav() {
   const location = useLocation();
 
   return (
-    <div className="mr-4 hidden md:flex">
-      <Link to="/" className="mr-6 flex items-center space-x-2">
-        <span className="hidden font-bold sm:inline-block">
-          HoopVision
-        </span>
+    <div className="hidden md:flex md:flex-col md:w-64 md:border-r">
+      <Link to="/" className="flex items-center space-x-2 py-4 px-6">
+        <span className="font-bold">HoopVision</span>
       </Link>
-      <NavigationMenu>
-        <NavigationMenuList>
-          {navItems.map((item) => (
-            <NavigationMenuItem key={item.href}>
-              <Link to={item.href} className={cn(
-                navigationMenuTriggerStyle(),
-                "flex items-center gap-1",
-                location.pathname === item.href &&
-                  "bg-accent text-accent-foreground font-medium"
-              )}>
-                <item.icon className="h-4 w-4" />
-                <span>{item.title}</span>
-              </Link>
-            </NavigationMenuItem>
-          ))}
-        </NavigationMenuList>
-      </NavigationMenu>
+      <nav className="flex flex-col">
+        {navItems.map((item) => (
+          <Link 
+            key={item.href} 
+            to={item.href} 
+            className={cn(
+              "flex items-center gap-2 py-3 px-6 hover:bg-accent",
+              location.pathname === item.href && "bg-accent text-accent-foreground font-medium"
+            )}
+          >
+            <item.icon className="h-4 w-4" />
+            <span>{item.title}</span>
+          </Link>
+        ))}
+      </nav>
     </div>
   );
 } 

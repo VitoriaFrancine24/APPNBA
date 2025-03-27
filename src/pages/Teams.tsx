@@ -9,7 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Search } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { Button } from '@/components/ui/button';
-import { Trophy } from 'lucide-react';
+import { Trophy, Basketball } from 'lucide-react';
 
 const Teams = () => {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -100,113 +100,46 @@ const Teams = () => {
   };
 
   return (
-    <div className="container py-8">
-      <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-4xl font-bold mb-2">Times da NBA</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl">
-          Explore os times da NBA, suas estatísticas e análises detalhadas.
-        </p>
-      </div>
-
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6">Times</h1>
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Conferência Leste */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-yellow-500" />
-              Conferência Leste
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Times da Conferência Leste da NBA, incluindo Boston Celtics, Milwaukee Bucks e outros.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Times do Leste
-            </Button>
+        {/* Lista de times simulada */}
+        {[1, 2, 3, 4, 5, 6].map((team) => (
+          <div key={team} className="border rounded-lg p-6 hover:bg-accent transition-colors">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="bg-primary/10 p-3 rounded-full">
+                <Basketball className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Time {team}</h3>
+                <p className="text-sm text-muted-foreground">Conferência Leste</p>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <div className="flex justify-between items-center">
+                <span>Vitórias</span>
+                <span className="font-medium">32</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Derrotas</span>
+                <span className="font-medium">18</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span>Aproveitamento</span>
+                <span className="font-medium">64%</span>
+              </div>
+            </div>
+            
+            <div className="mt-4 pt-4 border-t">
+              <a href={`/teams/${team}`} className="text-primary hover:underline">
+                Ver detalhes
+              </a>
+            </div>
           </div>
-        </Card>
-
-        {/* Conferência Oeste */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-blue-500" />
-              Conferência Oeste
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Times da Conferência Oeste da NBA, incluindo Golden State Warriors, Los Angeles Lakers e outros.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Times do Oeste
-            </Button>
-          </div>
-        </Card>
-
-        {/* Estatísticas Gerais */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-green-500" />
-              Estatísticas Gerais
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Análise completa das estatísticas de todos os times da NBA, incluindo tendências e comparações.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Estatísticas
-            </Button>
-          </div>
-        </Card>
+        ))}
       </div>
-
-      <div className="flex flex-col sm:flex-row gap-4 mb-8">
-        <div className="relative w-full">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Buscar time..."
-            className="pl-10"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </div>
-
-      <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="mb-8">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="all">Todos</TabsTrigger>
-          <TabsTrigger value="East">Leste</TabsTrigger>
-          <TabsTrigger value="West">Oeste</TabsTrigger>
-        </TabsList>
-      </Tabs>
-
-      {loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {renderSkeletons()}
-        </div>
-      ) : filteredTeams.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredTeams.map((team) => (
-            <TeamCard key={team.id} team={team} />
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-10">
-          <p className="text-muted-foreground">
-            Nenhum time encontrado para sua busca.
-          </p>
-        </div>
-      )}
     </div>
   );
 };

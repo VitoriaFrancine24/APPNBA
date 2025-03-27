@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Filter, RefreshCw, Clock, Trophy } from 'lucide-react';
+import { Calendar, Filter, RefreshCw, Clock, Trophy, Basketball } from 'lucide-react';
 import Header from '@/components/Header';
 import MatchCard from '@/components/MatchCard';
 import MatchPredictionModal from '@/components/MatchPredictionModal';
@@ -178,74 +178,67 @@ const Matches = () => {
   });
   
   return (
-    <div className="container py-8">
-      <div className="flex flex-col items-center text-center mb-12">
-        <h1 className="text-4xl font-bold mb-2">Jogos da NBA</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl">
-          Acompanhe os jogos, resultados e previsões da NBA.
-        </p>
+    <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-bold mb-6">Jogos</h1>
+      
+      <div className="border rounded-lg p-6 mb-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold mb-4">Jogos Recentes</h2>
+        </div>
+        
+        <div className="space-y-4">
+          {/* Lista de jogos simulada */}
+          {[1, 2, 3].map((game) => (
+            <div key={game} className="border rounded-lg p-4 hover:bg-accent transition-colors">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Basketball className="h-5 w-5" />
+                  <span className="font-medium">Time A</span>
+                </div>
+                <div className="text-center">
+                  <span className="text-sm bg-muted px-2 py-1 rounded">86 - 82</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">Time B</span>
+                  <Basketball className="h-5 w-5" />
+                </div>
+              </div>
+              <div className="mt-3 text-sm text-muted-foreground">
+                Data: 25/03/2025 • Encerrado
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Jogos de Hoje */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-blue-500" />
-              Jogos de Hoje
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Confira os jogos programados para hoje, incluindo horários e previsões.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Jogos de Hoje
-            </Button>
-          </div>
-        </Card>
-
-        {/* Próximos Jogos */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-yellow-500" />
-              Próximos Jogos
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Visualize os próximos jogos da NBA e suas previsões.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Próximos Jogos
-            </Button>
-          </div>
-        </Card>
-
-        {/* Resultados */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-green-500" />
-              Resultados
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground">
-              Acompanhe os resultados dos jogos recentes e análises pós-jogo.
-            </p>
-          </CardContent>
-          <div className="px-6 pb-6">
-            <Button variant="outline" className="w-full">
-              Ver Resultados
-            </Button>
-          </div>
-        </Card>
+      
+      <div className="border rounded-lg p-6">
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-semibold mb-4">Próximos Jogos</h2>
+        </div>
+        
+        <div className="space-y-4">
+          {/* Lista de próximos jogos simulada */}
+          {[1, 2, 3].map((game) => (
+            <div key={game} className="border rounded-lg p-4 hover:bg-accent transition-colors">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <Basketball className="h-5 w-5" />
+                  <span className="font-medium">Time C</span>
+                </div>
+                <div className="text-center">
+                  <span className="text-sm bg-muted px-2 py-1 rounded">VS</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">Time D</span>
+                  <Basketball className="h-5 w-5" />
+                </div>
+              </div>
+              <div className="mt-3 text-sm text-muted-foreground">
+                Data: 30/03/2025 • 19:00
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
